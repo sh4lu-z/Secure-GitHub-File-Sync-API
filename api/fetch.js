@@ -8,6 +8,7 @@ export default async function handler(req, res) {
     const REPO_OWNER = process.env.REPO_OWNER;
     const REPO_NAME = process.env.REPO_NAME;
     const SHARED_SECRET = process.env.SHARED_SECRET;
+    const branch = "new-update-and-erros-fix";
 
     // 🛡️ OTP පරීක්ෂාව
     const isValid = speakeasy.totp.verify({
@@ -24,7 +25,7 @@ export default async function handler(req, res) {
     try {
         // 🚀 1. ෆයිල් ලිස්ට් එක ගන්න අවස්ථාව (Recursive Trees API)
         if (!file) {
-            const listUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/git/trees/main?recursive=1`;
+            const listUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/git/trees/${branch}?recursive=1`;
             const response = await fetch(listUrl, {
                 headers: { 'Authorization': `Bearer ${GITHUB_TOKEN}` }
             });
@@ -44,7 +45,7 @@ export default async function handler(req, res) {
         }
 
         // 📥 2. නිශ්චිත ෆයිල් එකක් බාන අවස්ථාව (Contents API)
-        const branch = "new-update-and-erros-fix";
+
         const fetchUrl = `https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${file}?ref=${branch}`;
         const response = await fetch(fetchUrl, {
             headers: {
