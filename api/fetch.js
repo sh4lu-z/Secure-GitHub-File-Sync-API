@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     const REPO_OWNER = process.env.REPO_OWNER;
     const REPO_NAME = process.env.REPO_NAME;
     const SHARED_SECRET = process.env.SHARED_SECRET;
-    const branch = "cipher-MD-web";
+    const branch = "main";
 
     // 🛡️ OTP පරීක්ෂාව
     const isValid = speakeasy.totp.verify({
